@@ -20,7 +20,7 @@ public class Category {
     private Long id;
 
     @NotNull
-    @UniqueElements
+    @Column(unique=true)
     private String name;
 
     @JsonBackReference

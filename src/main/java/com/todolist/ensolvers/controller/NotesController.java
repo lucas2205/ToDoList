@@ -3,6 +3,7 @@ package com.todolist.ensolvers.controller;
 import com.todolist.ensolvers.dto.request.NotesRequestDto;
 import com.todolist.ensolvers.services.INotesService;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,10 @@ import static com.todolist.ensolvers.util.ResponseBuilder.responseBuilder;
 @RestController
 @RequestMapping("/notes")
 @CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class NotesController {
 
-    private INotesService notesService;
+    private final INotesService notesService;
 
     @PostMapping
     public ResponseEntity<?> createNote(@Valid @RequestBody NotesRequestDto notesDto) {
