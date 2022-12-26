@@ -1,20 +1,22 @@
 package com.todolist.ensolvers.services;
 
-import com.todolist.ensolvers.dto.NotesDto;
+
+import com.todolist.ensolvers.dto.request.NotesRequestDto;
+import com.todolist.ensolvers.dto.response.NotesResponseDto;
 
 
 import java.util.List;
 
 public interface INotesService {
-    NotesDto save(NotesDto notesDto);
+    NotesResponseDto save(NotesRequestDto notesDto);
 
-    NotesDto update(NotesDto notesDto);
+    NotesResponseDto update(NotesRequestDto notesDto);
 
     boolean delete(Long id);
 
-    NotesDto findById(Long id);
+    NotesResponseDto findById(Long id);
 
-    List<NotesDto> viewAllNotesArchived();
+    List<NotesResponseDto> viewAllNotesArchived();
 
-    List<NotesDto> viewAllNotesNotArchived();
+    List<NotesResponseDto> viewAllNotesNotArchived();
 }

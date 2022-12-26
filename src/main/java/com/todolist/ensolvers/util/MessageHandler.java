@@ -21,7 +21,7 @@ public class MessageHandler {
             @Value("${resource.notFound}") String resourceNotFound,
             @Value("${note.notFound}") String noteNotFound,
             @Value("${email.exist}") String emailExist,
-            @Value("${user.exist }") String userExist,
+            @Value("${user.exist}") String userExist,
             @Value("${register}") String register,
             @Value("${user.notFound}") String userNotFound) {
 

@@ -1,16 +1,13 @@
-package com.todolist.ensolvers.dto;
+package com.todolist.ensolvers.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.todolist.ensolvers.model.Category;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Set;
 
+@Data
+public class NotesRequestDto {
 
-@Setter
-@Getter
-public class NotesDto {
     private Long id;
 
     private String title;

@@ -1,34 +1,33 @@
 package com.todolist.ensolvers.controller;
 
-import com.todolist.ensolvers.dto.CategoryDto;
+import com.todolist.ensolvers.dto.request.CategoryRequestDto;
 import com.todolist.ensolvers.services.ICategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.todolist.ensolvers.util.ResponseBuilder.responseBuilder;
+
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
-
-    @Autowired
     private ICategoryService categoryService;
 
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable(name="id") Long id) {
-        return new ResponseEntity<>(categoryService.save(categoryDto,id), HttpStatus.CREATED);
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequestDto categoryDto, @PathVariable(name="id") Long id) {
+        return responseBuilder(HttpStatus.CREATED, categoryService.save(categoryDto,id));
     }
 
     @GetMapping
     public ResponseEntity<?> getAllCategories() {
-        return new ResponseEntity<>(categoryService.viewAllCategory(), HttpStatus.OK);
+        return responseBuilder(HttpStatus.CREATED, categoryService.viewAllCategory());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable(name="id") Long id) {
-        return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
+        return responseBuilder(HttpStatus.CREATED, categoryService.findById(id));
     }
 }
