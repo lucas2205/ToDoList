@@ -10,5 +10,7 @@ public interface INotesRepository extends JpaRepository<Notes, Long> {
 
     Set<Notes> findByArchive(Boolean archive);
 
+    List<Notes> findByUser_Id(Long id);
+
     List<Notes> findByCategories_Notes_Id(Long id);
 }

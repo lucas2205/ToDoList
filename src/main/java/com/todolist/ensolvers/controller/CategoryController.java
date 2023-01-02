@@ -19,17 +19,17 @@ public class CategoryController {
 
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequestDto categoryDto, @PathVariable(name="id") Long id) {
-        return responseBuilder(HttpStatus.CREATED, categoryService.save(categoryDto,id));
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequestDto categoryDto, @PathVariable(name="id") Long id, @RequestHeader("Authorization") String token) {
+        return responseBuilder(HttpStatus.CREATED, categoryService.save(categoryDto, id, token));
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllCategories() {
-        return responseBuilder(HttpStatus.CREATED, categoryService.viewAllCategory());
+    public ResponseEntity<?> getAllCategories(@RequestHeader("Authorization") String token) {
+        return responseBuilder(HttpStatus.OK, categoryService.viewAllCategory(token));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable(name="id") Long id) {
-        return responseBuilder(HttpStatus.CREATED, categoryService.findById(id));
+    public ResponseEntity<?> getById(@PathVariable(name="id") Long id, @RequestHeader("Authorization") String token) {
+        return responseBuilder(HttpStatus.OK, categoryService.findById(id, token));
     }
 }

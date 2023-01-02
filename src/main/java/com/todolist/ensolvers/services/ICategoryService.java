@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ICategoryService {
 
-    CategoryResponseDto save(CategoryRequestDto categoryDto, Long noteId);
-    CategoryResponseDto findById(Long id);
-    List<CategoryResponseDto> viewAllCategory();
+    CategoryResponseDto save(CategoryRequestDto categoryDto, Long noteId, String token);
+    CategoryResponseDto findById(Long id, String token);
+    List<CategoryResponseDto> viewAllCategory(String token);
 
 }

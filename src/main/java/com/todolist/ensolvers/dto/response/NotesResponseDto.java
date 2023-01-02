@@ -1,6 +1,7 @@
 package com.todolist.ensolvers.dto.response;
 
 import com.todolist.ensolvers.model.Category;
+
 import lombok.Data;
 
 import java.util.Set;
@@ -14,4 +15,5 @@ public class NotesResponseDto {
     private String content;
     private boolean archive;
     private Set<Category> categories;
+
 }

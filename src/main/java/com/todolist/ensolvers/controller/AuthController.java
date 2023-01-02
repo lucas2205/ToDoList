@@ -5,7 +5,7 @@ import java.util.Collections;
 import com.todolist.ensolvers.dto.LoginDto;
 import com.todolist.ensolvers.dto.RegisterDto;
 import com.todolist.ensolvers.model.Role;
-import com.todolist.ensolvers.model.Users;
+import com.todolist.ensolvers.model.User;
 import com.todolist.ensolvers.repository.IRoleRepository;
 import com.todolist.ensolvers.repository.IUserRepository;
 import com.todolist.ensolvers.security.JwtAuthResponseDto;
@@ -78,7 +78,7 @@ public class AuthController {
             return new ResponseEntity<>(messageHandler.emailExist,HttpStatus.BAD_REQUEST);
         }
 
-        Users usuario = new Users();
+        User usuario = new User();
         usuario.setName(registerDto.getName());
         usuario.setUsername(registerDto.getUsername());
         usuario.setEmail(registerDto.getEmail());

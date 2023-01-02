@@ -14,4 +14,5 @@ public class NotesRequestDto {
     private String content;
     private boolean archive;
     private Set<Category> categories;
+    private Long userId;
 }

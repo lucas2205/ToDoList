@@ -21,24 +21,24 @@ public class NotesController {
     private final INotesService notesService;
 
     @PostMapping
-    public ResponseEntity<?> createNote(@Valid @RequestBody NotesRequestDto notesDto) {
-        return responseBuilder(HttpStatus.CREATED, notesService.save(notesDto));
+    public ResponseEntity<?> createNote(@Valid @RequestBody NotesRequestDto notesDto, @RequestHeader("Authorization") String token) {
+        return responseBuilder(HttpStatus.CREATED, notesService.save(notesDto, token));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody NotesRequestDto notesDto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody NotesRequestDto notesDto, @RequestHeader("Authorization") String token) {
         notesDto.setId(id);
-        return responseBuilder(HttpStatus.OK, notesService.update(notesDto));
+        return responseBuilder(HttpStatus.OK, notesService.update(notesDto, token));
     }
 
     @GetMapping("/archive")
-    public ResponseEntity<?> listArchivedNotes() {
-        return responseBuilder(HttpStatus.OK,notesService.viewAllNotesArchived());
+    public ResponseEntity<?> listArchivedNotes(@RequestHeader("Authorization") String token) {
+        return responseBuilder(HttpStatus.OK,notesService.viewAllNotesArchived(token));
     }
 
     @GetMapping
-    public ResponseEntity<?> listNotArchivedNotes() {
-        return responseBuilder(HttpStatus.OK,notesService.viewAllNotesNotArchived());
+    public ResponseEntity<?> listNotArchivedNotes(@RequestHeader("Authorization") String token) {
+        return responseBuilder(HttpStatus.OK,notesService.viewAllNotesNotArchived(token));
     }
 
     @GetMapping("/{id}")

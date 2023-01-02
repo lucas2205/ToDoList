@@ -1,12 +1,10 @@
 package com.todolist.ensolvers.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -39,6 +37,12 @@ public class Notes {
                 joinColumns = {@JoinColumn(name = "categories_id")},
                 inverseJoinColumns = {@JoinColumn(name = "notes_id")})
         private Set<Category> categories;
+
+        @ManyToOne()
+        @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, updatable = false)
+        @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+        @NotNull(message = "")
+        private User user;
 
         public Set<Category> getCategories(){
                 return this.categories;

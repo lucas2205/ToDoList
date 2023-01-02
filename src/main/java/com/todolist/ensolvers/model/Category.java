@@ -1,8 +1,8 @@
 package com.todolist.ensolvers.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,10 +27,18 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private Set<Notes> notes;
 
+    @ManyToOne()
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @NotNull(message = "")
+    private User user;
+
 
     public Long getId(){
         return this.id;
     }
+
+    public Long getUserId(){ return this.user.getId(); }
 
     public String getName(){
         return this.name;

@@ -1,5 +1,6 @@
 package com.todolist.ensolvers.dto.response;
 
+import com.todolist.ensolvers.model.User;
 import lombok.Data;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public class CategoryResponseDto {
 
     private String name;
     private List<NotesResponseDto> notes;
+
 }
