@@ -3,6 +3,7 @@ package com.todolist.ensolvers.controller;
 import com.todolist.ensolvers.dto.request.NotesRequestDto;
 import com.todolist.ensolvers.services.INotesService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,22 +21,26 @@ public class NotesController {
 
     private final INotesService notesService;
 
+    @ApiOperation("Create new note for user")
     @PostMapping
     public ResponseEntity<?> createNote(@Valid @RequestBody NotesRequestDto notesDto, @RequestHeader("Authorization") String token) {
         return responseBuilder(HttpStatus.CREATED, notesService.save(notesDto, token));
     }
 
+    @ApiOperation("Actualizar notas del usuario")
     @PatchMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody NotesRequestDto notesDto, @RequestHeader("Authorization") String token) {
         notesDto.setId(id);
         return responseBuilder(HttpStatus.OK, notesService.update(notesDto, token));
     }
 
+    @ApiOperation("Listar notas archivadas del usuario")
     @GetMapping("/archive")
     public ResponseEntity<?> listArchivedNotes(@RequestHeader("Authorization") String token) {
         return responseBuilder(HttpStatus.OK,notesService.viewAllNotesArchived(token));
     }
 
+    @ApiOperation("Listar notas no archivadas del usuario")
     @GetMapping
     public ResponseEntity<?> listNotArchivedNotes(@RequestHeader("Authorization") String token) {
         return responseBuilder(HttpStatus.OK,notesService.viewAllNotesNotArchived(token));

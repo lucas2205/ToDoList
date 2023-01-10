@@ -4,6 +4,9 @@
 #spring.jpa.hibernate.ddl-auto=update
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 #H2
 #  datasource:
 #    url: jdbc:h2:mem:testdb
@@ -40,10 +43,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-mvc:
-pathmatch:
-matching-strategy: ant-path-matcher
 
 server:
 port: 8080
