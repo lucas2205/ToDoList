@@ -28,10 +28,9 @@ public class NotesController {
     }
 
     @ApiOperation("Actualizar notas del usuario")
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody NotesRequestDto notesDto, @RequestHeader("Authorization") String token) {
-        notesDto.setId(id);
-        return responseBuilder(HttpStatus.OK, notesService.update(notesDto, token));
+        return responseBuilder(HttpStatus.OK, notesService.update(id,notesDto, token));
     }
 
     @ApiOperation("Listar notas archivadas del usuario")
@@ -46,6 +45,15 @@ public class NotesController {
     public ResponseEntity<?> listNotArchivedNotes(@RequestHeader("Authorization") String token) {
         //return responseBuilder(HttpStatus.OK,notesService.viewAllNotesNotArchived(token));
         return new ResponseEntity<>( notesService.viewAllNotesNotArchived(token),HttpStatus.OK);
+    }
+
+    @ApiOperation("Traer nota por id")
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@RequestHeader("Authorization") String token,@PathVariable Long id){
+
+        System.out.println(token);
+        System.out.println(id);
+        return new ResponseEntity(notesService.findById(token, id), HttpStatus.OK);
     }
 
     @GetMapping("/allNotes")

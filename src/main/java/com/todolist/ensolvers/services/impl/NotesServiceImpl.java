@@ -28,25 +28,26 @@ public class NotesServiceImpl implements INotesService {
 
     @Override
     public NotesResponseDto save(NotesRequestDto notesDto, String token) {
-
         Long userId = jwt.getUserId(token);
         notesDto.setUserId(userId);
+
        return ModelMapperFacade.map(
                 notesRepository.save(ModelMapperFacade.map(notesDto, Notes.class)),
                 NotesResponseDto.class);
     }
 
     @Override
-    public NotesResponseDto  update(NotesRequestDto notesDto, String token) {
+    public NotesResponseDto update(Long id, NotesRequestDto notesDto, String token) {
 
         Long userId = jwt.getUserId(token);
+        notesDto.setUserId(userId);
+        Notes note = notesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(messageHandler.noteNotFound));
 
-        if(Objects.equals(notesDto.getUserId(), userId)) {
-            return notesRepository.findById(notesDto.getId())
-                    .map(c -> ModelMapperFacade.map(
-                            notesRepository.save(ModelMapperFacade.map(notesDto, Notes.class)),
-                            NotesResponseDto.class))
-                    .orElseThrow(() -> new ResourceNotFoundException(messageHandler.noteNotFound));
+
+        if(userId == note.getUser().getId()){
+            notesRepository.save(ModelMapperFacade.map(notesDto,Notes.class));
+            return ModelMapperFacade.map(note, NotesResponseDto.class);
         }else{
             throw new UserUnauthorizedException("NO AUTORIZADO");
         }
@@ -68,6 +69,21 @@ public class NotesServiceImpl implements INotesService {
         }
 
         return true;
+    }
+
+    @Override
+    public NotesResponseDto findById(String token, Long id){
+
+        Long userId = jwt.getUserId(token);
+
+        Notes note = notesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(messageHandler.noteNotFound));
+
+        if(userId == note.getUser().getId()){
+            return ModelMapperFacade.map(note, NotesResponseDto.class);
+        }else{
+            throw new UserUnauthorizedException("NO AUTORIZADO");
+        }
     }
 
     @Override
