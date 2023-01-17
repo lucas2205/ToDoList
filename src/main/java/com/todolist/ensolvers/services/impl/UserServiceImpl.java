@@ -2,6 +2,7 @@ package com.todolist.ensolvers.services.impl;
 
 import com.todolist.ensolvers.dto.LoginDto;
 import com.todolist.ensolvers.dto.RegisterDto;
+import com.todolist.ensolvers.exception.UserUnauthorizedException;
 import com.todolist.ensolvers.model.Role;
 import com.todolist.ensolvers.model.User;
 import com.todolist.ensolvers.repository.IRoleRepository;
@@ -9,10 +10,9 @@ import com.todolist.ensolvers.repository.IUserRepository;
 import com.todolist.ensolvers.security.JwtAuthResponseDto;
 import com.todolist.ensolvers.security.JwtTokenProvider;
 import com.todolist.ensolvers.services.IUserService;
-import com.todolist.ensolvers.util.MessageHandler;
+
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,6 +35,9 @@ public class UserServiceImpl implements IUserService {
     @Override
     public RegisterDto saveUser(RegisterDto registerDto){
 
+        if(userRepository.existsByUsername(registerDto.getUsername()) || userRepository.existsByEmail(registerDto.getEmail())){
+            throw new UserUnauthorizedException("El Usuario ya está registrado");
+        }
 
         User usuario = new User();
         usuario.setName(registerDto.getName());
@@ -56,7 +59,6 @@ public class UserServiceImpl implements IUserService {
         Role roles = roleRepository.findByName("ROLE_ADMIN").get();
 
         usuario.setRoles(Collections.singleton(roles));
-
         userRepository.save(usuario);
         return registerDto;
     }

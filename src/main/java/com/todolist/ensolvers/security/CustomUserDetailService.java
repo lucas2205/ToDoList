@@ -34,6 +34,12 @@ public class CustomUserDetailService implements UserDetailsService{
         return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),mapearRoles(user.getRoles()));
     }
 
+    public User getUserByUsername(String usernameOrEmail)throws UsernameNotFoundException {
+
+    return userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
+                .orElseThrow(() -> new UsernameNotFoundException(messageHandler.userNotFound));
+    }
+
     private Collection<? extends GrantedAuthority> mapearRoles(Set<Role> roles){
         return roles.stream().map(rol-> new SimpleGrantedAuthority(rol.getName())).collect(Collectors.toList());
     }

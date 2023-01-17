@@ -3,29 +3,29 @@ package com.todolist.ensolvers.security;
 
 public class JwtAuthResponseDto {
 
-    private String tokenDeAcceso;
+    private String token;
     private String tipoDeToken = "Bearer";
 
-    public JwtAuthResponseDto(String tokenDeAcceso, String tipoDeToken) {
+    public JwtAuthResponseDto(String token, String tipoDeToken) {
 
         super();
-        this.tokenDeAcceso = tokenDeAcceso;
+        this.token = token;
         this.tipoDeToken = tipoDeToken;
 
     }
 
-    public JwtAuthResponseDto(String tokenDeAcceso) {
+    public JwtAuthResponseDto(String token) {
 
         super();
-        this.tokenDeAcceso = tokenDeAcceso;
+        this.token = token;
     }
 
-    public String getTokenDeAcceso() {
-        return tokenDeAcceso;
+    public String getToken() {
+        return token;
     }
 
-    public void setTokenDeAcceso(String tokenDeAcceso) {
-        this.tokenDeAcceso = tokenDeAcceso;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getTipoDeToken() {

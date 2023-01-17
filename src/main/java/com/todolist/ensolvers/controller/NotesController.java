@@ -15,7 +15,6 @@ import static com.todolist.ensolvers.util.ResponseBuilder.responseBuilder;
 
 @RestController
 @RequestMapping("/notes")
-@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class NotesController {
 
@@ -24,7 +23,8 @@ public class NotesController {
     @ApiOperation("Create new note for user")
     @PostMapping
     public ResponseEntity<?> createNote(@Valid @RequestBody NotesRequestDto notesDto, @RequestHeader("Authorization") String token) {
-        return responseBuilder(HttpStatus.CREATED, notesService.save(notesDto, token));
+       // return responseBuilder(HttpStatus.CREATED, notesService.save(notesDto, token));
+        return new ResponseEntity<>( notesService.save(notesDto, token),HttpStatus.CREATED);
     }
 
     @ApiOperation("Actualizar notas del usuario")
@@ -37,23 +37,25 @@ public class NotesController {
     @ApiOperation("Listar notas archivadas del usuario")
     @GetMapping("/archive")
     public ResponseEntity<?> listArchivedNotes(@RequestHeader("Authorization") String token) {
-        return responseBuilder(HttpStatus.OK,notesService.viewAllNotesArchived(token));
+        //return responseBuilder(HttpStatus.OK,notesService.viewAllNotesArchived(token));
+        return new ResponseEntity<>( notesService.viewAllNotesArchived(token),HttpStatus.OK);
     }
 
     @ApiOperation("Listar notas no archivadas del usuario")
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<?> listNotArchivedNotes(@RequestHeader("Authorization") String token) {
-        return responseBuilder(HttpStatus.OK,notesService.viewAllNotesNotArchived(token));
+        //return responseBuilder(HttpStatus.OK,notesService.viewAllNotesNotArchived(token));
+        return new ResponseEntity<>( notesService.viewAllNotesNotArchived(token),HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
-        return responseBuilder(HttpStatus.OK, notesService.findById(id));
+    @GetMapping("/allNotes")
+    public ResponseEntity<?> getAll() {
+        return new ResponseEntity<>( notesService.findAll(),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
-        if (notesService.delete(id)) {
+    public ResponseEntity<?> delete(@PathVariable(name = "id") Long id, @RequestHeader("Authorization") String token){
+        if (notesService.delete(id, token)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

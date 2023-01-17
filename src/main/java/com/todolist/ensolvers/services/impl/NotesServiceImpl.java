@@ -53,23 +53,33 @@ public class NotesServiceImpl implements INotesService {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Long id, String token) {
+
+        Long userId = jwt.getUserId(token);
 
         Notes note = notesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(messageHandler.noteNotFound));
 
+        if(Objects.equals(note.getUser().getId(), userId)) {
         note.getCategories().forEach(category -> category.removeNotes(id));
-
         notesRepository.delete(note);
+        }else{
+            throw new UserUnauthorizedException("NO AUTORIZADO");
+        }
+
         return true;
     }
 
     @Override
-    public NotesResponseDto findById(Long id){
+    public List<NotesResponseDto> findAll(){
 
-        Notes note = notesRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(messageHandler.noteNotFound));
-        return ModelMapperFacade.map(note,NotesResponseDto.class);
+       List<NotesResponseDto> allNotes = new ArrayList<>();
+
+        notesRepository.findAll()
+                .forEach(note -> allNotes.add(ModelMapperFacade.map(
+                        note, NotesResponseDto.class)));
+
+       return  allNotes;
     }
 
     @Override

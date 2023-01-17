@@ -12,9 +12,9 @@ public interface INotesService {
 
     NotesResponseDto update(NotesRequestDto notesDto, String token);
 
-    boolean delete(Long id);
+    boolean delete(Long id, String token);
 
-    NotesResponseDto findById(Long id);
+    List<NotesResponseDto> findAll();
 
     List<NotesResponseDto> viewAllNotesArchived(String token);
 
