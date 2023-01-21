@@ -31,7 +31,7 @@ public class Notes {
 
         @ManyToMany(cascade = {
                 CascadeType.ALL
-        })
+        }, fetch = FetchType.EAGER)
         @JoinTable(
                 name = "categories_notes",
                 joinColumns = {@JoinColumn(name = "categories_id")},

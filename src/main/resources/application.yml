@@ -8,23 +8,23 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 #H2
-#  datasource:
-#    url: jdbc:h2:mem:testdb
-#    driverClassName: org.h2.Driver
-#    password: sa
+  datasource:
+    url: ${DB_URL} # jdbc:postgresql://sa-east-1.f5de5090-59eb-47d6-881b-97bea52f0237.aws.ybdb.io:5433/yugabyte
+    username: ${DB_USER} # admin
+    password: $DB_PASS #-a0MYancPcdbUtcvOzZiUU6A6bDqIC
 #  h2:
 #    console:
 #      enabled: 'true'
 #      path: /h2-console
-#  jpa:
-#    open-in-view: 'false'
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.H2Dialect
-#        format_sql: 'true'
-#    show-sql: 'true'
-#    hibernate:
-#      ddl-auto: 'update'
+  jpa:
+    open-in-view: 'false'
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: 'update'
 
 ##SUPABASE
 #datasource:
@@ -35,14 +35,14 @@ spring:
 #ddl-auto: update
 
 #LOCAL
-  datasource:
-    username: root
-    url: jdbc:mysql://localhost:3306/todolist
-    password: Lucas2205.
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+#  datasource:
+#    username: root
+#    url: jdbc:mysql://localhost:3306/todolist
+#    password: Lucas2205.
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
 
 server:
 port: 8080
